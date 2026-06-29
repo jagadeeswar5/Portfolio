@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jagadeeswar Kamireddy | Full-Stack Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --text: #e2e8f0;
+      --primary: #00d4ff;
+      --secondary: #7c3aed;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --nav-height: 80px;
+      --section-padding: clamp(3rem, 8vw, 8rem);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+    a:hover { color: var(--primary); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      z-index: 1000;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    nav.scrolled {
+      background: rgba(10, 14, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-weight: 500; position: relative; }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; left: 0;
+      width: 0; height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: var(--text); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    #mesh-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    .mesh-hint {
+      position: absolute;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-size: 0.68rem;
+      color: rgba(148,163,184,0.5);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .hero-content { z-index: 10; max-width: 800px; padding: 0 1rem; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 1rem;
+      color: var(--text);
+      text-shadow: 0 0 60px rgba(0,212,255,0.15);
+    }
+    .hero .title {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .typed-wrapper {
+      min-height: 2em;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #0a0e1a;
+      border-radius: 50px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+      box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+      color: #0a0e1a;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.78rem;
+    }
+    .btn-outline:hover {
+      background: rgba(0,212,255,0.1);
+      box-shadow: 0 0 15px rgba(0,212,255,0.2);
+      color: var(--primary);
+    }
+
+    /* SECTIONS */
+    section { padding: var(--section-padding) 0; }
+    section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--primary);
+    }
+
+    /* GLASS CARD */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      border-color: rgba(0,212,255,0.15);
+    }
+
+    /* ABOUT */
+    .about .container { max-width: 800px; }
+    .about p { font-size: 1.05rem; text-align: center; color: #94a3b8; line-height: 1.8; }
+    .about p strong { color: var(--text); }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .skill-category h3 { margin-bottom: 1rem; color: var(--secondary); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .skill-items { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .skill-tag {
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: #c4b5fd;
+      transition: background 0.3s ease;
+    }
+    .skill-tag:hover { background: rgba(124, 58, 237, 0.22); }
+
+    /* TIMELINE */
+    .timeline { position: relative; max-width: 820px; margin: 0 auto; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px; top: 8px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), rgba(124,58,237,0.2));
+    }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; padding-left: 75px; }
+    .timeline-dot {
+      position: absolute;
+      left: 20px; top: 4px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 12px rgba(0,212,255,0.5);
+    }
+    .timeline-dot.secondary {
+      background: var(--secondary);
+      box-shadow: 0 0 12px rgba(124,58,237,0.5);
+    }
+    .timeline-date { font-weight: 600; color: var(--primary); margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .timeline-content h3 { margin-bottom: 0.6rem; font-size: 1.05rem; }
+    .timeline-content h3 span { color: #94a3b8; font-weight: 400; font-size: 0.9rem; }
+    .timeline-content ul { padding-left: 1.2rem; }
+    .timeline-content li { margin-bottom: 0.4rem; color: #94a3b8; font-size: 0.9rem; line-height: 1.6; }
+    .timeline-content li strong { color: var(--text); }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
+    .project-card { display: flex; flex-direction: column; }
+    .project-card h3 { margin-bottom: 0.8rem; color: var(--primary); font-size: 1.05rem; }
+    .project-card p { color: #94a3b8; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; flex: 1; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .tech-tag {
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #67e8f9;
+    }
+    .project-links { display: flex; gap: 0.8rem; margin-top: auto; }
+
+    /* CONTACT */
+    .contact .container { max-width: 620px; text-align: center; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+    .contact-links a { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; color: #94a3b8; }
+    .contact-links a:hover { color: var(--primary); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); }
+
+    /* SCROLL INDICATOR */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.5;
+      animation: float 2s ease-in-out infinite;
+    }
+    .scroll-indicator span { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+    .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--primary); border-bottom: 2px solid var(--primary); transform: rotate(45deg); }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: var(--nav-height); left: 0;
+        width: 100%;
+        background: rgba(10,14,26,0.97);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        transform: translateY(-110%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .nav-links.active { transform: translateY(0); opacity: 1; }
+      .mobile-toggle { display: block; }
+      .timeline::before { left: 18px; }
+      .timeline-item { padding-left: 55px; }
+      .timeline-dot { left: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="container">
+      <a href="#" class="logo">JK</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <canvas id="mesh-bg"></canvas>
+    <div class="hero-content">
+      <h1>Jagadeeswar Kamireddy</h1>
+      <div class="title">Full-Stack Software Engineer &nbsp;·&nbsp; Service Owner &nbsp;·&nbsp; DoorDash</div>
+      <div class="typed-wrapper"><span class="typed-text"></span></div>
+      <a href="#projects" class="btn">View My Work</a>
+    </div>
+    <div class="mesh-hint">Live service mesh · move your cursor</div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="container">
+      <h2>About</h2>
+      <div class="card fade-up">
+        <p>
+          Full-stack engineer with <strong>1+ year of production experience at DoorDash</strong>, operating as a contractor through Critical River. I own <strong>5 production microservices</strong>, build distributed systems, and ship features end-to-end — from Snowflake queries and FastAPI backends to React frontends and Kubernetes deployments. I've led an ECS-to-EKS migration with zero downtime, built a distributed load testing framework that stabilized services at ~2,000 concurrent requests, and delivered a critical audit log system in one week with zero rollback incidents. Previously a <strong>Research Assistant</strong> and <strong>Teaching Assistant</strong> at Cal State Sacramento, where I built ML pipelines processing 10M+ data points and taught Java & Algorithms to 30+ students per semester.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category card fade-up">
+          <h3>Backend</h3>
+          <div class="skill-items">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Redis</span>
+            <span class="skill-tag">SQLAlchemy</span>
+            <span class="skill-tag">Pydantic</span>
+            <span class="skill-tag">Snowflake</span>
+            <span class="skill-tag">REST APIs</span>
+          </div>
+        </div>
+        <div class="skill-category card fade-up">
+          <h3>Frontend</h3>
+          <div class="skill-items">
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skill-category card fade-up">
+          <h3>Cloud & DevOps</h3>
+          <div class="skill-items">
+            <span class="skill-tag">AWS (EC2/S3/RDS)</span>
+            <span class="skill-tag">ECS / EKS</span>
+            <span class="skill-tag">Kubernetes</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">CI/CD</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Locust</span>
+          </div>
+        </div>
+        <div class="skill-category card fade-up">
+          <h3>ML / AI</h3>
+          <div class="skill-items">
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">Scikit-Learn</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">YOLOv5</span>
+            <span class="skill-tag">NLP / CV</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="experience">
+    <div class="container">
+      <h2>Experience</h2>
+      <div class="timeline">
+
+        <div class="timeline-item fade-up">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Aug 2025 – Present</div>
+          <div class="timeline-content card">
+            <h3>Associate Software Engineer <span>— Critical River (Contractor at DoorDash)</span></h3>
+            <ul>
+              <li><strong>Service owner of 5 production microservices</strong> — authorization, admin, API gateway middleware, and two business logic services. Primary on-call responder and release owner for each.</li>
+              <li>Built two full-stack financial data features end-to-end: a <strong>vendor onboarding dashboard</strong> and a <strong>third-party ERP integration</strong> (Snowflake, FastAPI, Pydantic) with zero breaking changes.</li>
+              <li>Delivered an <strong>audit log system</strong> for a load-bearing admin service in one week; zero rollback incidents across production release.</li>
+              <li>Built a <strong>Locust + Streamlit load testing framework</strong> (9 chart types); tuned AWS RDS connection pools and worker counts to stabilize all 5 services at <strong>~2,000 concurrent requests</strong>.</li>
+              <li>Achieved <strong>90%+ unit test coverage</strong> (365 tests passing); standardized CSV export and URL handling across 4 data sources.</li>
+              <li>Led <strong>ECS → EKS migration</strong> with zero production downtime; replaced single-record API calls with batched requests across all services.</li>
+              <li>Onboarded as owner of 4 services mid-release cycle and shipped a cross-service comment edit/delete feature within two weeks.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-up">
+          <div class="timeline-dot secondary"></div>
+          <div class="timeline-date">Jun 2025 – Aug 2025</div>
+          <div class="timeline-content card">
+            <h3>Full Stack Developer Intern <span>— Critical River (Contractor at DoorDash)</span></h3>
+            <ul>
+              <li>Built Python/FastAPI microservices with REST APIs, user-scoped access control, AWS S3 file handling, and PostgreSQL operations for an internal platform serving <strong>100+ stakeholders</strong>.</li>
+              <li>Implemented <strong>JWT authentication and spreadsheet-level access control</strong> from scratch — the service's first production security layer.</li>
+              <li>Built the <strong>first load testing harness</strong> for the data management service and introduced CI/CD-aligned unit testing standards with automated quality gates.</li>
+              <li>Resolved multiple production bugs, participated in code reviews, and authored internal documentation for onboarding.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-up">
+          <div class="timeline-dot secondary"></div>
+          <div class="timeline-date">May 2024 – May 2025</div>
+          <div class="timeline-content card">
+            <h3>Research Assistant <span>— California State University Sacramento</span></h3>
+            <ul>
+              <li>Developed ML models for predictive analysis of citrus disease spread, achieving <strong>~88% classification accuracy</strong> on held-out validation sets.</li>
+              <li>Built data pipelines in R and Python processing <strong>10M+ simulation data points</strong>; reduced runtime by ~40% via parallel processing and vectorized operations.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-up">
+          <div class="timeline-dot secondary"></div>
+          <div class="timeline-date">Aug 2024 – Aug 2025</div>
+          <div class="timeline-content card">
+            <h3>Teaching Assistant <span>— California State University Sacramento</span></h3>
+            <ul>
+              <li>Delivered Java and algorithms lab sessions to <strong>30+ undergraduate students</strong> per semester; developed materials that improved assessment scores by ~15%.</li>
+              <li>Provided 1-on-1 mentorship on data structures, recursion, and algorithm analysis.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card card fade-up" data-tilt data-tilt-max="5" data-tilt-glare="true" data-tilt-max-glare="0.15">
+          <h3>AR-Based Interior Design System</h3>
+          <div class="project-tech">
+            <span class="tech-tag">Flask</span><span class="tech-tag">OpenCV</span><span class="tech-tag">TensorFlow</span><span class="tech-tag">SAM</span>
+          </div>
+          <p>AI-driven furniture placement with AR visualization. Integrated Meta's Segment Anything Model for pixel-accurate real-time object segmentation across varied lighting conditions. Reduced staging time by ~60% vs. manual 2D tools.</p>
+          <div class="project-links">
+            <a href="https://github.com/jagadeeswar-kamireddy/ar-interior-design" class="btn btn-outline" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card card fade-up" data-tilt data-tilt-max="5" data-tilt-glare="true" data-tilt-max-glare="0.15">
+          <h3>License Plate Detection (YOLOv5)</h3>
+          <div class="project-tech">
+            <span class="tech-tag">YOLOv5</span><span class="tech-tag">OpenCV</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Python</span>
+          </div>
+          <p>Fine-tuned YOLOv5 on 5,000+ annotated images achieving 94% detection accuracy across varied angles and lighting. Built an end-to-end pipeline with real-time video capture and PostgreSQL export for traffic monitoring.</p>
+          <div class="project-links">
+            <a href="https://github.com/jagadeeswar-kamireddy/license-plate-detection" class="btn btn-outline" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card card fade-up" data-tilt data-tilt-max="5" data-tilt-glare="true" data-tilt-max-glare="0.15">
+          <h3>GDP Prediction System</h3>
+          <div class="project-tech">
+            <span class="tech-tag">XGBoost</span><span class="tech-tag">LSTM</span><span class="tech-tag">World Bank/IMF</span><span class="tech-tag">Python</span>
+          </div>
+          <p>ML pipeline forecasting GDP for India and the US using World Bank and IMF time-series data. Achieved MAPE under 3% on 5-year out-of-sample test sets with automated preprocessing and feature engineering.</p>
+          <div class="project-links">
+            <a href="https://github.com/jagadeeswar-kamireddy/gdp-prediction" class="btn btn-outline" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card card fade-up" data-tilt data-tilt-max="5" data-tilt-glare="true" data-tilt-max-glare="0.15">
+          <h3>AI Event Scheduler</h3>
+          <div class="project-tech">
+            <span class="tech-tag">Flask</span><span class="tech-tag">Google Calendar API</span><span class="tech-tag">ML</span><span class="tech-tag">Python</span>
+          </div>
+          <p>AI-powered scheduling assistant integrating Google Calendar API with ML-based conflict detection and priority-based resolution. Eliminated 80% of scheduling conflicts in multi-user testing, including recurring events and cross-timezone edge cases.</p>
+          <div class="project-links">
+            <a href="https://github.com/jagadeeswar-kamireddy/ai-event-scheduler" class="btn btn-outline" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <div class="card fade-up">
+        <div class="contact-links">
+          <a href="mailto:kamireddy.jagadeeswar@gmail.com">✉️ kamireddy.jagadeeswar@gmail.com</a>
+          <a href="https://linkedin.com/in/jagadeeswar-kamireddy" target="_blank">💼 LinkedIn</a>
+          <a href="https://github.com/jagadeeswar-kamireddy" target="_blank">🐙 GitHub</a>
+          <a href="https://yourportfolio.com" target="_blank">🌐 Portfolio</a>
+        </div>
+        <a href="#" class="btn">Download Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Jagadeeswar Kamireddy — Built with passion, shipped to production.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Microservices Mesh Background (NDA-safe generic labels)
+    (function initMesh() {
+      const canvas = document.getElementById('mesh-bg');
+      const ctx = canvas.getContext('2d');
+      let W, H, dpr;
+
+      const services = [
+        { id: 'gw',   label: 'API Gateway', rx: 0.15, ry: 0.32, r: 30, color: '#00d4ff' },
+        { id: 'api',  label: 'FastAPI',     rx: 0.38, ry: 0.18, r: 27, color: '#7c3aed' },
+        { id: 'k8s',  label: 'Kubernetes',  rx: 0.38, ry: 0.52, r: 25, color: '#7c3aed' },
+        { id: 'redis',label: 'Redis',       rx: 0.62, ry: 0.22, r: 24, color: '#00d4ff' },
+        { id: 'pg',   label: 'PostgreSQL',  rx: 0.62, ry: 0.52, r: 26, color: '#22d3a8' },
+        { id: 's3',   label: 'AWS S3',      rx: 0.62, ry: 0.82, r: 23, color: '#7c3aed' },
+        { id: 'snow', label: 'Snowflake',   rx: 0.85, ry: 0.40, r: 26, color: '#22d3a8' }
+      ];
+      const edges = [
+        ['gw','api'], ['gw','k8s'],
+        ['api','redis'], ['api','pg'],
+        ['k8s','pg'], ['k8s','s3'],
+        ['redis','snow'], ['pg','snow'], ['s3','snow'], ['api','snow']
+      ];
+
+      let nodes = {}, mouse = { x: -9999, y: -9999 };
+      const packets = [];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = canvas.offsetWidth = window.innerWidth;
+        H = canvas.offsetHeight = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        layout();
+      }
+      function layout() {
+        services.forEach(s => {
+          const ex = nodes[s.id];
+          nodes[s.id] = {
+            ...s,
+            x: ex ? ex.x : s.rx * W,
+            y: ex ? ex.y : s.ry * H,
+            baseX: s.rx * W,
+            baseY: s.ry * H,
+            pulse: ex ? ex.pulse : 0,
+            phase: ex ? ex.phase : Math.random() * Math.PI * 2
+          };
+        });
+      }
+      function spawnPacket() {
+        const e = edges[Math.floor(Math.random() * edges.length)];
+        packets.push({ from: e[0], to: e[1], t: 0, speed: 0.005 + Math.random() * 0.008 });
+      }
+
+      window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+      let frame = 0;
+      function draw() {
+        frame++;
+        ctx.clearRect(0, 0, W, H);
+
+        Object.values(nodes).forEach(n => {
+          const dxd = Math.cos(frame * 0.008 + n.phase) * 5;
+          const dyd = Math.sin(frame * 0.01 + n.phase) * 5;
+          let tx = n.baseX + dxd, ty = n.baseY + dyd;
+          const dx = n.x - mouse.x, dy = n.y - mouse.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 120) {
+            const force = (120 - dist) / 120 * 26;
+            tx += (dx / dist) * force; ty += (dy / dist) * force;
+          }
+          n.x += (tx - n.x) * 0.07;
+          n.y += (ty - n.y) * 0.07;
+          if (n.pulse > 0) n.pulse -= 0.035;
+        });
+
+        edges.forEach(([a, b]) => {
+          const na = nodes[a], nb = nodes[b];
+          ctx.beginPath();
+          ctx.moveTo(na.x, na.y); ctx.lineTo(nb.x, nb.y);
+          ctx.strokeStyle = 'rgba(124,58,237,0.16)';
+          ctx.lineWidth = 1; ctx.stroke();
+        });
+
+        if (frame % 14 === 0) spawnPacket();
+        for (let i = packets.length - 1; i >= 0; i--) {
+          const p = packets[i];
+          p.t += p.speed;
+          const na = nodes[p.from], nb = nodes[p.to];
+          const x = na.x + (nb.x - na.x) * p.t;
+          const y = na.y + (nb.y - na.y) * p.t;
+          ctx.beginPath();
+          ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#00d4ff';
+          ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 12;
+          ctx.fill(); ctx.shadowBlur = 0;
+          if (p.t >= 1) { nb.pulse = 1; packets.splice(i, 1); }
+        }
+
+        Object.values(nodes).forEach(n => {
+          if (n.pulse > 0) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r + (1 - n.pulse) * 22, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(0,212,255,${n.pulse * 0.5})`;
+            ctx.lineWidth = 2; ctx.stroke();
+          }
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(10,14,26,0.85)'; ctx.fill();
+          ctx.strokeStyle = n.color; ctx.lineWidth = 2;
+          ctx.shadowColor = n.color; ctx.shadowBlur = 14 + n.pulse * 16;
+          ctx.stroke(); ctx.shadowBlur = 0;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = n.color; ctx.fill();
+          ctx.font = '600 12px Inter, sans-serif';
+          ctx.fillStyle = 'rgba(226,232,240,0.72)';
+          ctx.textAlign = 'center';
+          ctx.fillText(n.label, n.x, n.y + n.r + 16);
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      draw();
+    })();
+
+    // GSAP Scroll Animations
+    (function initGSAP() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+      });
+
+      gsap.utils.toArray('.fade-up').forEach(el => {
+        gsap.fromTo(el, { opacity: 0, y: 40 }, {
+          opacity: 1, y: 0, duration: 0.9, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 82%', toggleActions: 'play none none reverse' }
+        });
+      });
+
+      gsap.to('.hero-content', {
+        y: -60,
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      gsap.to('.scroll-indicator', {
+        opacity: 0,
+        scrollTrigger: { trigger: '.hero', start: '10% top', end: '25% top', scrub: true }
+      });
+    })();
+
+    // Typed.js
+    new Typed('.typed-text', {
+      strings: [
+        'Backend Engineer',
+        'Cloud Infrastructure',
+        'ML Systems Engineer',
+        'Service Owner of 5 Microservices',
+        'Full-Stack Developer'
+      ],
+      typeSpeed: 55,
+      backSpeed: 30,
+      backDelay: 2200,
+      loop: true,
+      cursorChar: '|'
+    });
+
+    // Vanilla Tilt
+    VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
+      max: 5, speed: 400, glare: true, 'max-glare': 0.15
+    });
+
+    // Mobile Nav
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+    });
+  </script>
+</body>
+</html>
